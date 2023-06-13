@@ -1,0 +1,173 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jun 13, 2023 at 03:56 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `rpl`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer`
+--
+
+CREATE TABLE `customer` (
+  `idCustomer` varchar(10) NOT NULL,
+  `username` varchar(15) NOT NULL,
+  `password` varchar(15) NOT NULL,
+  `nama` varchar(50) NOT NULL,
+  `alamat` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `no_telp` varchar(13) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mobil`
+--
+
+CREATE TABLE `mobil` (
+  `idKendaraan` varchar(10) NOT NULL,
+  `no_polisi` varchar(12) NOT NULL,
+  `nama_kendaraan` varchar(20) NOT NULL,
+  `type` varchar(15) NOT NULL,
+  `tanggal_pajak` varchar(20) NOT NULL,
+  `status` varchar(15) NOT NULL,
+  `warna` varchar(15) NOT NULL,
+  `harga_sewa` int(12) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `owner`
+--
+
+CREATE TABLE `owner` (
+  `idOwner` varchar(10) NOT NULL,
+  `nama` varchar(50) NOT NULL,
+  `username` varchar(15) NOT NULL,
+  `password` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sewa`
+--
+
+CREATE TABLE `sewa` (
+  `idSewa` varchar(10) NOT NULL,
+  `idKendaraan` varchar(10) NOT NULL,
+  `idCustomer` varchar(10) NOT NULL,
+  `idStaff` varchar(10) NOT NULL,
+  `idSupir` varchar(10) NOT NULL,
+  `tanggal_pinjam` varchar(15) NOT NULL,
+  `tanggal_kembali` varchar(15) NOT NULL,
+  `total_biaya` int(12) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `staff`
+--
+
+CREATE TABLE `staff` (
+  `idStaff` varchar(10) NOT NULL,
+  `nama_staff` varchar(50) NOT NULL,
+  `username` varchar(15) NOT NULL,
+  `password` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `supir`
+--
+
+CREATE TABLE `supir` (
+  `idSupir` varchar(10) NOT NULL,
+  `nama_supir` varchar(50) NOT NULL,
+  `alamat_supir` varchar(50) NOT NULL,
+  `no_telp_supir` varchar(13) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `customer`
+--
+ALTER TABLE `customer`
+  ADD PRIMARY KEY (`idCustomer`);
+
+--
+-- Indexes for table `mobil`
+--
+ALTER TABLE `mobil`
+  ADD PRIMARY KEY (`idKendaraan`);
+
+--
+-- Indexes for table `owner`
+--
+ALTER TABLE `owner`
+  ADD PRIMARY KEY (`idOwner`);
+
+--
+-- Indexes for table `sewa`
+--
+ALTER TABLE `sewa`
+  ADD PRIMARY KEY (`idSewa`),
+  ADD KEY `idKendaraan` (`idKendaraan`),
+  ADD KEY `idCustomer` (`idCustomer`),
+  ADD KEY `idStaff` (`idStaff`),
+  ADD KEY `idSupir` (`idSupir`);
+
+--
+-- Indexes for table `staff`
+--
+ALTER TABLE `staff`
+  ADD PRIMARY KEY (`idStaff`);
+
+--
+-- Indexes for table `supir`
+--
+ALTER TABLE `supir`
+  ADD PRIMARY KEY (`idSupir`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `sewa`
+--
+ALTER TABLE `sewa`
+  ADD CONSTRAINT `sewa_ibfk_1` FOREIGN KEY (`idKendaraan`) REFERENCES `mobil` (`idKendaraan`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `sewa_ibfk_2` FOREIGN KEY (`idCustomer`) REFERENCES `customer` (`idCustomer`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `sewa_ibfk_3` FOREIGN KEY (`idStaff`) REFERENCES `staff` (`idStaff`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `sewa_ibfk_4` FOREIGN KEY (`idSupir`) REFERENCES `supir` (`idSupir`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

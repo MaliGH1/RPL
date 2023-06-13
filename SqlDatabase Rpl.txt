@@ -1,27 +1,143 @@
-Database : rpl
-tabel owner :
-CREATE TABLE `rpl`.`owner` (`idOwner` VARCHAR(10) NOT NULL , `nama` VARCHAR(50) NOT NULL , `username` INT(15) NOT NULL , `password` INT(15) NOT NULL , PRIMARY KEY (`idOwner`)) ENGINE = InnoDB;
+-- Table structure for table `customer`
+--
 
-tabel supir:
-CREATE TABLE `rpl`.`supir` (`idSupir` VARCHAR(10) NOT NULL , `nama_supir` VARCHAR(50) NOT NULL , `alamat_supir` VARCHAR(50) NOT NULL , `no_telp_supir` VARCHAR(13) NOT NULL , PRIMARY KEY (`idSupir`)) ENGINE = InnoDB;
+CREATE TABLE `customer` (
+  `idCustomer` varchar(10) NOT NULL,
+  `username` varchar(15) NOT NULL,
+  `password` varchar(15) NOT NULL,
+  `nama` varchar(50) NOT NULL,
+  `alamat` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `no_telp` varchar(13) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-tabel mobil:
-CREATE TABLE `rpl`.`mobil` (`idKendaraan` VARCHAR(10) NOT NULL , `no_polisi` VARCHAR(12) NOT NULL , `nama_kendaraan` VARCHAR(20) NOT NULL , `type` VARCHAR(15) NOT NULL , `tanggal_pajak` VARCHAR(20) NOT NULL , `status` VARCHAR(15) NOT NULL , `warna` VARCHAR(15) NOT NULL , `harga_sewa` INT(12) NOT NULL ) ENGINE = InnoDB;
+-- --------------------------------------------------------
 
-tabel staff:
-CREATE TABLE `rpl`.`staff` (`idStaff` VARCHAR(10) NOT NULL , `nama_staff` VARCHAR(50) NOT NULL , `username` INT(15) NOT NULL , `password` INT(15) NOT NULL , PRIMARY KEY (`idStaff`)) ENGINE = InnoDB;
+--
+-- Table structure for table `mobil`
+--
 
+CREATE TABLE `mobil` (
+  `idKendaraan` varchar(10) NOT NULL,
+  `no_polisi` varchar(12) NOT NULL,
+  `nama_kendaraan` varchar(20) NOT NULL,
+  `type` varchar(15) NOT NULL,
+  `tanggal_pajak` varchar(20) NOT NULL,
+  `status` varchar(15) NOT NULL,
+  `warna` varchar(15) NOT NULL,
+  `harga_sewa` int(12) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-tabel customer:
-CREATE TABLE `rpl`.`customer` (`idCustomer` VARCHAR(10) NOT NULL , `username` VARCHAR(15) NOT NULL , `password` VARCHAR(15) NOT NULL , `nama` VARCHAR(50) NOT NULL , `alamat` VARCHAR(50) NOT NULL , `email` VARCHAR(50) NOT NULL , `no_telp` VARCHAR(13) NOT NULL , PRIMARY KEY (`idCustomer`)) ENGINE = InnoDB;
+-- --------------------------------------------------------
 
-tabel sewa:
-CREATE TABLE `rpl`.`sewa` (`idSewa` VARCHAR(10) NOT NULL ,
-                           `idKendaraan` VARCHAR(10) NOT NULL , 
-                           `idStaff` VARCHAR(10) NOT NULL , 
-                           `idSupir` VARCHAR(10) NOT NULL , 
-                           `idCustomer` VARCHAR(10) NOT NULL , 
-                           `tanggal_pinjam` VARCHAR(15) NOT NULL , 
-                           `tanggal_kembali` VARCHAR(15) NOT NULL , 
-                           `total_biaya` INT(12) NOT NULL , 
-                           PRIMARY KEY (`idSewa`)) ENGINE = InnoDB;
+--
+-- Table structure for table `owner`
+--
+
+CREATE TABLE `owner` (
+  `idOwner` varchar(10) NOT NULL,
+  `nama` varchar(50) NOT NULL,
+  `username` varchar(15) NOT NULL,
+  `password` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sewa`
+--
+
+CREATE TABLE `sewa` (
+  `idSewa` varchar(10) NOT NULL,
+  `idKendaraan` varchar(10) NOT NULL,
+  `idCustomer` varchar(10) NOT NULL,
+  `idStaff` varchar(10) NOT NULL,
+  `idSupir` varchar(10) NOT NULL,
+  `tanggal_pinjam` varchar(15) NOT NULL,
+  `tanggal_kembali` varchar(15) NOT NULL,
+  `total_biaya` int(12) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `staff`
+--
+
+CREATE TABLE `staff` (
+  `idStaff` varchar(10) NOT NULL,
+  `nama_staff` varchar(50) NOT NULL,
+  `username` varchar(15) NOT NULL,
+  `password` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `supir`
+--
+
+CREATE TABLE `supir` (
+  `idSupir` varchar(10) NOT NULL,
+  `nama_supir` varchar(50) NOT NULL,
+  `alamat_supir` varchar(50) NOT NULL,
+  `no_telp_supir` varchar(13) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `customer`
+--
+ALTER TABLE `customer`
+  ADD PRIMARY KEY (`idCustomer`);
+
+--
+-- Indexes for table `mobil`
+--
+ALTER TABLE `mobil`
+  ADD PRIMARY KEY (`idKendaraan`);
+
+--
+-- Indexes for table `owner`
+--
+ALTER TABLE `owner`
+  ADD PRIMARY KEY (`idOwner`);
+
+--
+-- Indexes for table `sewa`
+--
+ALTER TABLE `sewa`
+  ADD PRIMARY KEY (`idSewa`),
+  ADD KEY `idKendaraan` (`idKendaraan`),
+  ADD KEY `idCustomer` (`idCustomer`),
+  ADD KEY `idStaff` (`idStaff`),
+  ADD KEY `idSupir` (`idSupir`);
+
+--
+-- Indexes for table `staff`
+--
+ALTER TABLE `staff`
+  ADD PRIMARY KEY (`idStaff`);
+
+--
+-- Indexes for table `supir`
+--
+ALTER TABLE `supir`
+  ADD PRIMARY KEY (`idSupir`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `sewa`
+--
+ALTER TABLE `sewa`
+  ADD CONSTRAINT `sewa_ibfk_1` FOREIGN KEY (`idKendaraan`) REFERENCES `mobil` (`idKendaraan`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `sewa_ibfk_2` FOREIGN KEY (`idCustomer`) REFERENCES `customer` (`idCustomer`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `sewa_ibfk_3` FOREIGN KEY (`idStaff`) REFERENCES `staff` (`idStaff`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `sewa_ibfk_4` FOREIGN KEY (`idSupir`) REFERENCES `supir` (`idSupir`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;

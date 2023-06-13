@@ -1,0 +1,27 @@
+Database : rpl
+tabel owner :
+CREATE TABLE `rpl`.`owner` (`idOwner` VARCHAR(10) NOT NULL , `nama` VARCHAR(50) NOT NULL , `username` INT(15) NOT NULL , `password` INT(15) NOT NULL , PRIMARY KEY (`idOwner`)) ENGINE = InnoDB;
+
+tabel supir:
+CREATE TABLE `rpl`.`supir` (`idSupir` VARCHAR(10) NOT NULL , `nama_supir` VARCHAR(50) NOT NULL , `alamat_supir` VARCHAR(50) NOT NULL , `no_telp_supir` VARCHAR(13) NOT NULL , PRIMARY KEY (`idSupir`)) ENGINE = InnoDB;
+
+tabel mobil:
+CREATE TABLE `rpl`.`mobil` (`idKendaraan` VARCHAR(10) NOT NULL , `no_polisi` VARCHAR(12) NOT NULL , `nama_kendaraan` VARCHAR(20) NOT NULL , `type` VARCHAR(15) NOT NULL , `tanggal_pajak` VARCHAR(20) NOT NULL , `status` VARCHAR(15) NOT NULL , `warna` VARCHAR(15) NOT NULL , `harga_sewa` INT(12) NOT NULL ) ENGINE = InnoDB;
+
+tabel staff:
+CREATE TABLE `rpl`.`staff` (`idStaff` VARCHAR(10) NOT NULL , `nama_staff` VARCHAR(50) NOT NULL , `username` INT(15) NOT NULL , `password` INT(15) NOT NULL , PRIMARY KEY (`idStaff`)) ENGINE = InnoDB;
+
+
+tabel customer:
+CREATE TABLE `rpl`.`customer` (`idCustomer` VARCHAR(10) NOT NULL , `username` VARCHAR(15) NOT NULL , `password` VARCHAR(15) NOT NULL , `nama` VARCHAR(50) NOT NULL , `alamat` VARCHAR(50) NOT NULL , `email` VARCHAR(50) NOT NULL , `no_telp` VARCHAR(13) NOT NULL , PRIMARY KEY (`idCustomer`)) ENGINE = InnoDB;
+
+tabel sewa:
+CREATE TABLE `rpl`.`sewa` (`idSewa` VARCHAR(10) NOT NULL ,
+                           `idKendaraan` VARCHAR(10) NOT NULL , 
+                           `idStaff` VARCHAR(10) NOT NULL , 
+                           `idSupir` VARCHAR(10) NOT NULL , 
+                           `idCustomer` VARCHAR(10) NOT NULL , 
+                           `tanggal_pinjam` VARCHAR(15) NOT NULL , 
+                           `tanggal_kembali` VARCHAR(15) NOT NULL , 
+                           `total_biaya` INT(12) NOT NULL , 
+                           PRIMARY KEY (`idSewa`)) ENGINE = InnoDB;

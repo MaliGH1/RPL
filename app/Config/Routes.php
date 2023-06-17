@@ -29,7 +29,12 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
+
+// Untuk Mobil 
+use App\Controllers\Mobil;
+$routes->get('/', 'Mobil::showData');
+$routes->match(['get', 'post'], 'mobil/showDataMobil', [Mobil::class, 'showData']);
+$routes->match(['get', 'post'], 'mobil/addData', [Mobil::class, 'simpan']);
 
 /*
  * --------------------------------------------------------------------

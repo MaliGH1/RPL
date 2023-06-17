@@ -6,7 +6,7 @@ class Login extends BaseController
 {
     public function index()
     {
-        return view('login/loginpage');
+        return view('Akun/login');
     }
 
     public function check()
@@ -15,9 +15,9 @@ class Login extends BaseController
         if ($post['usr'] == 'admin' && $post['pwd'] == '123') {
             $session = session();
             $session->set('pengguna', $post['usr']);
-            return view('login/home');
+            return view('Akun/home');
         } else {
-            return view('login/fail');
+            return view('Akun/fail');
         }
     }
 

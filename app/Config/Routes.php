@@ -36,8 +36,8 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.\
 
-$routes->get('asisten', [AsistenController::class, 'login']);
-$routes->get('asisten', [AsistenController::class, 'AsistenView']);
+$routes->get('asisten', [Login::class, 'login']);
+$routes->get('asisten', [Login::class, 'AsistenView']);
 $routes->match(['get', 'post'], 'asisten/check', [AsistenController::class, 'check']);
 /*
  * --------------------------------------------------------------------

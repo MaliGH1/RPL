@@ -2,6 +2,9 @@
 
 namespace Config;
 
+use App\Controllers\AsistenController;
+use App\Controllers\News;
+use App\Controllers\Pages;
 use App\Controllers\Login;
 
 // Create a new instance of our RouteCollection class.
@@ -31,18 +34,11 @@ $routes->setAutoRoute(true);
  */
 
 // We get a performance increase by specifying the default
-// route since we don't have to scan directories.
+// route since we don't have to scan directories.\
 
-// Untuk Mobil 
-use App\Controllers\Mobil;
-
-$routes->get('/', 'Mobil::showData');
-$routes->match(['get', 'post'], 'mobil/showDataMobil', [Mobil::class, 'showData']);
-$routes->match(['get', 'post'], 'mobil/addData', [Mobil::class, 'simpan']);
-
-
-$routes->get('Akun', [Login::class, 'Login']);
-$routes->match(['get', 'post'], 'Akun/check', [Login::class, 'check']);
+$routes->get('asisten', [AsistenController::class, 'login']);
+$routes->get('asisten', [AsistenController::class, 'AsistenView']);
+$routes->match(['get', 'post'], 'asisten/check', [AsistenController::class, 'check']);
 /*
  * --------------------------------------------------------------------
  * Additional Routing
